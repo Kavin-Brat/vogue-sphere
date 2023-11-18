@@ -1,3 +1,9 @@
+## TO START VOGUE-SPHERE CLIENT APP
+
+-Install all Node modules using npm install.
+-Ensure that you have filled in all the environment variables in the .env file.
+-Start the Vogue Sphere client app using npm run dev-client.
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
