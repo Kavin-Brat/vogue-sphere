@@ -1,14 +1,14 @@
 import { useState } from "react";
 import "./App.css";
 import TopMenubar from "./components/TopMenubar/TopMenubar";
+import Login from "./components/Login/Login";
+import BackgroundChanger from "./common-components/BackgroundChanger";
 
 function App() {
   return (
     <>
       <TopMenubar />
-      {/* <div className=" max-w-[1500px]">
-        <div className="flex justify-center bg-regal-blue"> 01</div>
-      </div> */}
+      <Login />
     </>
   );
 }
