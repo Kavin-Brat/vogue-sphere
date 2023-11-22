@@ -1,19 +1,36 @@
-import React, { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import googleLogo from "../../icons/GoogleLogo.png";
+
+type ValueObj = { value: { value: string; label: string }; error: string };
+
+type InitialState = {
+  name: ValueObj;
+  email: ValueObj;
+  password: ValueObj;
+  mobile_no: ValueObj;
+  dail_code: ValueObj;
+};
+
+const initialState: InitialState = {
+  name: { value: { value: "", label: "" }, error: "" },
+  email: { value: { value: "", label: "" }, error: "" },
+  password: { value: { value: "", label: "" }, error: "" },
+  mobile_no: { value: { value: "", label: "" }, error: "" },
+  dail_code: { value: { value: "", label: "" }, error: "" },
+};
+
 function Login() {
-  const [newUser, setnewUser] = useState(false);
-  const [userDetals, setUserDetails] = useState({
-    name: { value: { value: String, lable: String }, error: String },
-    email: { value: { value: String, lable: String }, error: String },
-    password: { value: { value: String, lable: String }, error: String },
-    mobile_no: { value: { value: String, lable: String }, error: String },
-    dail_code: { value: { value: String, lable: String }, error: String },
-  });
-  // onclick show create new user screen
+  const [newUser, setNewUser] = useState(false);
+  const [userDetails, setUserDetails] = useState<InitialState>(initialState);
+
   const onClickCreateNewUser = () => {
-    setnewUser((prev) => !prev);
+    setNewUser((prev) => !prev);
   };
-  const onChangeInputHandler = (event: any, fieldName: String) => {
+
+  const onChangeInputHandler = (
+    event: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+    fieldName: string
+  ) => {
     if (event?.target?.value) {
       setUserDetails((prev) => ({
         ...prev,
@@ -39,7 +56,7 @@ function Login() {
     }
   };
 
-  console.log("userDetals", userDetals);
+  console.log("userDetails", userDetails);
 
   return (
     <div className="flex justify-center flex-col items-center  pt-10 xl:pt-16 2xl:pt-32">
@@ -51,7 +68,7 @@ function Login() {
           }}
         >
           <div className="">
-            <img src={googleLogo} className="w-5 h-5 2xl:w-6 2xl:h-6" />
+            <img src={googleLogo} className="w-5 h-5 2xl:w-6 2xl:h-6" alt="Google Logo" />
           </div>
           <div className="flex justify-start text-xs 2xl:text-base font-medium text-[#666666]">
             <p>Connect with Google</p>
@@ -61,19 +78,42 @@ function Login() {
           {newUser && (
             <div className="mb-4">
               <label className="block text-xs 2xl:text-base font-medium text-[#666666] mb-1 2xl:mb-2">Name</label>
-              <input value={userDetals.name.value.value} onChange={(event) => onChangeInputHandler(event, "name")} className="shadow  bg-[#F3F9FB] appearance-none border rounded w-full py-2 px-3 text-xs 2xl:text-base text-[#666666] leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Name" />
+              <input
+                value={userDetails.name.value.value}
+                onChange={(event) => onChangeInputHandler(event, "name")}
+                className="shadow  bg-[#F3F9FB] appearance-none border rounded w-full py-2 px-3 text-xs 2xl:text-base text-[#666666] leading-tight focus:outline-none focus:shadow-outline"
+                id="username"
+                type="text"
+                placeholder="Name"
+              />
             </div>
           )}
           <div className="mb-4">
             <label className="block text-[#666666] font-medium text-xs 2xl:text-base mb-1 2xl:mb-2">Email</label>
-            <input value={userDetals.email.value.value} onChange={(event) => onChangeInputHandler(event, "email")} className="shadow  bg-[#F3F9FB] appearance-none border rounded w-full py-2 px-3 text-xs 2xl:text-base text-[#666666] leading-tight focus:outline-none focus:shadow-outline" id="email" type="text" placeholder="Email" />
+            <input
+              value={userDetails.email.value.value}
+              onChange={(event) => onChangeInputHandler(event, "email")}
+              className="shadow  bg-[#F3F9FB] appearance-none border rounded w-full py-2 px-3 text-xs 2xl:text-base text-[#666666] leading-tight focus:outline-none focus:shadow-outline"
+              id="email"
+              type="text"
+              placeholder="Email"
+            />
           </div>
           {newUser && (
             <div className="flex w-full space-x-2 2xl:space-x-3">
               <div className="mb-4 basis-1/2">
-                <label className="hidden 2xl:block block text-[#666666] font-medium text-xs 2xl:text-base mb-1 2xl:mb-2">Dail Code</label>
+                <label className="hidden 2xl:block block text-[#666666] font-medium text-xs 2xl:text-base mb-1 2xl:mb-2">
+                  Dail Code
+                </label>
                 <label className="block 2xl:hidden text-[#666666] font-medium text-xs 2xl:text-base mb-1 2xl:mb-2">Code</label>
-                <select value={userDetals.dail_code} onChange={(event) => onChangeInputHandler(event, "dail_code")} id="dail_code" name="dail_code" className="shadow  bg-[#F3F9FB] appearance-none border rounded w-full py-2 px-3 text-xs 2xl:text-base text-[#666666] leading-tight focus:outline-none focus:shadow-outline" placeholder="Dail Code">
+                <select
+                  value={userDetails.dail_code.value.value}
+                  onChange={(event) => onChangeInputHandler(event, "dail_code")}
+                  id="dail_code"
+                  name="dail_code"
+                  className="shadow  bg-[#F3F9FB] appearance-none border rounded w-full py-2 px-3 text-xs 2xl:text-base text-[#666666] leading-tight focus:outline-none focus:shadow-outline"
+                  placeholder="Dail Code"
+                >
                   <option>IN +91</option>
                   <option>IN +91</option>
                   <option>IN +91</option>
@@ -83,7 +123,7 @@ function Login() {
               <div className="mb-4 w-full flex-grow">
                 <label className="block text-[#666666] font-medium text-xs 2xl:text-base mb-1 2xl:mb-2">Mobile Number</label>
                 <input
-                  value={userDetals.mobile_no.value.value}
+                  value={userDetails.mobile_no.value.value}
                   onChange={(event) => onChangeInputHandler(event, "mobile_no")}
                   className="shadow  bg-[#F3F9FB] appearance-none border rounded w-full py-2 px-3 text-xs 2xl:text-base text-[#666666] leading-tight focus:outline-none focus:shadow-outline"
                   id="mobile_no"
@@ -96,18 +136,23 @@ function Login() {
           <div className="mb-6">
             <label className="block text-[#666666] font-medium text-xs 2xl:text-base mb-1 2xl:mb-2">Password</label>
             <input
-              value={userDetals.password.value.value}
+              value={userDetails.password.value.value}
               onChange={(event) => onChangeInputHandler(event, "password")}
               className="shadow bg-[#F3F9FB] appearance-none border border-red-500 rounded w-full py-2 px-3 text-xs 2xl:text-base text-[#666666] mb-3 leading-tight focus:outline-none focus:shadow-outline"
               id="password"
               type="password"
               placeholder="Password"
             />
-            <p className={userDetals.password.value.error ? "text-red-500 text-xs italic" : "hidden"}>{userDetals.password.value.error ? userDetals.password.value.error : ""}</p>
+            <p className={userDetails.password.error ? "text-red-500 text-xs italic" : "hidden"}>
+              {userDetails.password.error ? userDetails.password.error : ""}
+            </p>
           </div>
 
           <div className="flex items-center justify-between">
-            <button className="bg-regal-blue hover:bg-regal-blue text-white text-xs 2xl:text-base font-medium py-[6px] px-3 2xl:py-[7px] 2xl:px-4 rounded focus:outline-none focus:shadow-outline transition duration-300 ease-in-out transform hover:scale-105" type="button">
+            <button
+              className="bg-regal-blue hover:bg-regal-blue text-white text-xs 2xl:text-base font-medium py-[6px] px-3 2xl:py-[7px] 2xl:px-4 rounded focus:outline-none focus:shadow-outline transition duration-300 ease-in-out transform hover:scale-105"
+              type="button"
+            >
               {newUser ? "Sign up" : "Log in"}
             </button>
             {!newUser && (
@@ -124,8 +169,11 @@ function Login() {
               <div className="font-medium text-xs 2xl:text-base text-[#666666] w-[590px]">New to Vogue Sphere?</div>
               <div className="w-full flex items-center justify-center border-b-2 border-[#EDEDED] rounded"></div>
             </div>
-            <div className="space-x-2 2xl:space-x-3 flex justify-center items-center bg-white hover:bg-[#EDEDED] shadow-md p-[6px] 2xl:p-2 rounded-md border border-[#EDEDED] cursor-pointer my-1" onClick={onClickCreateNewUser}>
-              <div className="flex justify-center font-medium text-xs 2xl:text-base  text-[#666666]">
+            <div
+              className="space-x-2 2xl:space-x-3 flex justify-center items-center bg-white hover:bg-[#EDEDED] shadow-md p-[6px] 2xl:p-2 rounded-md border border-[#EDEDED] cursor-pointer my-1"
+              onClick={onClickCreateNewUser}
+            >
+              <div className="flex justify-center font-medium text-xs 2xl:text-base text-[#666666]">
                 <p>Create your Vogue Sphere account</p>
               </div>
             </div>

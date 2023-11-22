@@ -2,15 +2,15 @@ import React, { useState, useEffect } from "react"; // Assuming you have a child
 import image1 from "../assets/img/bg-image1.jpg";
 import image2 from "../assets/img/bg-image2.jpg";
 import image3 from "../assets/img/bg-image3.jpg";
-const images = [
+const images: string[] = [
   image1,
   image2,
   image3,
   // Add more image URLs as needed
 ];
 
-const BackgroundImage = ({ imageUrl }) => {
-  const styles = {
+const BackgroundImage = ({ imageUrl }: { imageUrl: string }) => {
+  const styles: object = {
     backgroundImage: `url(${imageUrl})`,
     backgroundSize: "cover",
     backgroundPosition: "center",
@@ -26,7 +26,11 @@ const BackgroundImage = ({ imageUrl }) => {
   return <div style={styles}></div>;
 };
 
-const BackgroundChanger = ({ children }) => {
+interface BackgroundChangerProps {
+  children: React.ReactNode;
+}
+
+const BackgroundChanger: React.FC<BackgroundChangerProps> = ({ children }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
