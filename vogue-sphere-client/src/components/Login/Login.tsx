@@ -1,5 +1,6 @@
 import { ChangeEvent, useState } from "react";
 import googleLogo from "../../icons/GoogleLogo.png";
+import { useNavigate } from "react-router-dom";
 
 type ValueObj = { value: { value: string; label: string }; error: string };
 
@@ -20,17 +21,26 @@ const initialState: InitialState = {
 };
 
 function Login() {
+  const navigate: NavigationProp<ParamListBase> = useNavigate();
   const [newUser, setNewUser] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [userDetails, setUserDetails] = useState<InitialState>(initialState);
 
   const onClickCreateNewUser = () => {
     setNewUser((prev) => !prev);
   };
 
-  const onChangeInputHandler = (
-    event: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
-    fieldName: string
-  ) => {
+  // setting Temporary Login flag in localstorage
+  const setTempLogin = (): void => {
+    setLoading(true);
+    localStorage.setItem("lin", "true");
+    setTimeout(() => {
+      navigate("/dashboard");
+      setLoading(false);
+    }, 5000);
+  };
+
+  const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>, fieldName: string) => {
     if (event?.target?.value) {
       setUserDetails((prev) => ({
         ...prev,
@@ -78,33 +88,17 @@ function Login() {
           {newUser && (
             <div className="mb-4">
               <label className="block text-xs 2xl:text-base font-medium text-[#666666] mb-1 2xl:mb-2">Name</label>
-              <input
-                value={userDetails.name.value.value}
-                onChange={(event) => onChangeInputHandler(event, "name")}
-                className="shadow  bg-[#F3F9FB] appearance-none border rounded w-full py-2 px-3 text-xs 2xl:text-base text-[#666666] leading-tight focus:outline-none focus:shadow-outline"
-                id="username"
-                type="text"
-                placeholder="Name"
-              />
+              <input value={userDetails.name.value.value} onChange={(event) => onChangeInputHandler(event, "name")} className="shadow  bg-[#F3F9FB] appearance-none border rounded w-full py-2 px-3 text-xs 2xl:text-base text-[#666666] leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Name" />
             </div>
           )}
           <div className="mb-4">
             <label className="block text-[#666666] font-medium text-xs 2xl:text-base mb-1 2xl:mb-2">Email</label>
-            <input
-              value={userDetails.email.value.value}
-              onChange={(event) => onChangeInputHandler(event, "email")}
-              className="shadow  bg-[#F3F9FB] appearance-none border rounded w-full py-2 px-3 text-xs 2xl:text-base text-[#666666] leading-tight focus:outline-none focus:shadow-outline"
-              id="email"
-              type="text"
-              placeholder="Email"
-            />
+            <input value={userDetails.email.value.value} onChange={(event) => onChangeInputHandler(event, "email")} className="shadow  bg-[#F3F9FB] appearance-none border rounded w-full py-2 px-3 text-xs 2xl:text-base text-[#666666] leading-tight focus:outline-none focus:shadow-outline" id="email" type="text" placeholder="Email" />
           </div>
           {newUser && (
             <div className="flex w-full space-x-2 2xl:space-x-3">
               <div className="mb-4 basis-1/2">
-                <label className="hidden 2xl:block block text-[#666666] font-medium text-xs 2xl:text-base mb-1 2xl:mb-2">
-                  Dail Code
-                </label>
+                <label className="hidden 2xl:block block text-[#666666] font-medium text-xs 2xl:text-base mb-1 2xl:mb-2">Dail Code</label>
                 <label className="block 2xl:hidden text-[#666666] font-medium text-xs 2xl:text-base mb-1 2xl:mb-2">Code</label>
                 <select
                   value={userDetails.dail_code.value.value}
@@ -143,17 +137,12 @@ function Login() {
               type="password"
               placeholder="Password"
             />
-            <p className={userDetails.password.error ? "text-red-500 text-xs italic" : "hidden"}>
-              {userDetails.password.error ? userDetails.password.error : ""}
-            </p>
+            <p className={userDetails.password.error ? "text-red-500 text-xs italic" : "hidden"}>{userDetails.password.error ? userDetails.password.error : ""}</p>
           </div>
 
           <div className="flex items-center justify-between">
-            <button
-              className="bg-regal-blue hover:bg-regal-blue text-white text-xs 2xl:text-base font-medium py-[6px] px-3 2xl:py-[7px] 2xl:px-4 rounded focus:outline-none focus:shadow-outline transition duration-300 ease-in-out transform hover:scale-105"
-              type="button"
-            >
-              {newUser ? "Sign up" : "Log in"}
+            <button className="bg-regal-blue hover:bg-regal-blue text-white text-xs 2xl:text-base font-medium py-[6px] px-3 2xl:py-[7px] 2xl:px-4 rounded focus:outline-none focus:shadow-outline transition duration-300 ease-in-out transform hover:scale-105" type="button" onClick={setTempLogin}>
+              {loading ? <>Loading...</> : <>{newUser ? "Sign up" : "Log in"}</>}
             </button>
             {!newUser && (
               <a className="inline-block align-baseline font-medium text-xs 2xl:text-base text-regal-blue hover:text-blue-800" href="#">
@@ -169,10 +158,7 @@ function Login() {
               <div className="font-medium text-xs 2xl:text-base text-[#666666] w-[590px]">New to Vogue Sphere?</div>
               <div className="w-full flex items-center justify-center border-b-2 border-[#EDEDED] rounded"></div>
             </div>
-            <div
-              className="space-x-2 2xl:space-x-3 flex justify-center items-center bg-white hover:bg-[#EDEDED] shadow-md p-[6px] 2xl:p-2 rounded-md border border-[#EDEDED] cursor-pointer my-1"
-              onClick={onClickCreateNewUser}
-            >
+            <div className="space-x-2 2xl:space-x-3 flex justify-center items-center bg-white hover:bg-[#EDEDED] shadow-md p-[6px] 2xl:p-2 rounded-md border border-[#EDEDED] cursor-pointer my-1" onClick={onClickCreateNewUser}>
               <div className="flex justify-center font-medium text-xs 2xl:text-base text-[#666666]">
                 <p>Create your Vogue Sphere account</p>
               </div>
