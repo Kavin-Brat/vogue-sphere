@@ -14,13 +14,14 @@ const TopMenubar: React.FC = () => {
             <div className="w-4 xl:w-5 2xl:w-7 h-[1px] 2xl:h-[2px] bg-regal-blue my-[2px] xl:my-[3px] 2xl:my-[4px] rounded-md"></div>
           </div>
         </div>
-        <div
+        <a
           className="
         flex justify-center items-center
         text-xs xl:text-base 2xl:text-4xl font-bold text-regal-blue cursor-pointer"
+          href={`/shop/dashboard`}
         >
           Vogue Sphere
-        </div>
+        </a>
       </div>
       <div className="basis-1/2 grid justify-items-center">
         <SearchDropdown />
@@ -30,8 +31,13 @@ const TopMenubar: React.FC = () => {
           <div className="">
             <img src={userIcon} className="w-3 h-3 xl:w-4 xl:h-4 2xl:w-5 2xl:h-5 hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105" />
           </div>
-          <div className="hidden xl:block text-xs 2xl:text-base  font-medium text-[#666666]">Sign up/Log in</div>
-          <div className="text-xs font-normal text-[#666666]  block xl:hidden">Sign in</div>
+          <a href={`/shop/login`} className="hidden xl:block text-xs 2xl:text-base  font-medium text-[#666666]">
+            Sign up/Log in
+          </a>
+
+          <a href={`/shop/login`} className="text-xs font-normal text-[#666666]  block xl:hidden">
+            Sign in
+          </a>
         </div>
         <div className="basis-1/2 flex justify-end space-x-2 2xl:space-x-3 cursor-pointer">
           <div className="flex justify-center items-center">
@@ -42,6 +48,6 @@ const TopMenubar: React.FC = () => {
       </div>
     </div>
   );
-}
+};
 
 export default TopMenubar;
