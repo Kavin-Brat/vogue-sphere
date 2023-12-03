@@ -2,11 +2,16 @@ const { models } = require("../models/index");
 const { UserModel } = models;
 const Sequelize = require("sequelize");
 const { Op } = Sequelize;
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
+
+// secret key for creating the jwt token
+const SECRET_KEY = "secret123";
 
 // user login service
 const userLogin = async (req) => {
-  console.log("req-body-info", req.body);
   const user = await UserModel.findOne({
+    attributes: ["name", "email", "password", "dail_code", "mobile_no"],
     where: {
       email: Sequelize.where(Sequelize.fn("LOWER", Sequelize.col("email")), {
         [Op.iLike]: `%${req.body.email.toLowerCase()}%`,
@@ -16,9 +21,56 @@ const userLogin = async (req) => {
       }),
     },
   });
+
+  // creating JWT token with user creds
+  const accessToken = jwt.sign(
+    {
+      name: user.name,
+      email: user.email,
+    },
+    SECRET_KEY
+  );
+  let token = { access_token: accessToken, refresh_token: "" };
+  user.dataValues.token = token;
+  // Limiting the password in returning the responses
+  delete user.dataValues.password;
+
   return user ? user : { message: "Invalid User!" };
+};
+
+// register new user service
+const registerNewUser = async (req) => {
+  if (!req.body.name) return { message: "name required!" };
+  if (!req.body.email) return { message: "email required!" };
+  if (!req.body.password) return { message: "password required!" };
+  if (!req.body.dail_code) return { message: "dail_code required!" };
+  if (!req.body.mobile_no) return { message: "mobile_no required!" };
+
+  // Check if user already exist
+  const user = await UserModel.findOne({
+    attributes: ["email"],
+    where: {
+      email: Sequelize.where(Sequelize.fn("LOWER", Sequelize.col("email")), {
+        [Op.iLike]: `%${req.body.email.toLowerCase()}%`,
+      }),
+    },
+  });
+  // throwing error if user already exist.
+  if (user) return { message: "Email already exist!" };
+
+  const createUser = await UserModel.create({
+    name: req.body.name,
+    email: req.body.email,
+    password: req.body.password,
+    dail_code: req.body.dail_code,
+    mobile_no: req.body.mobile_no,
+    id: Date.now(),
+  });
+
+  return createUser ? null : { message: "Invalid User!" };
 };
 
 module.exports = {
   userLogin,
+  registerNewUser,
 };

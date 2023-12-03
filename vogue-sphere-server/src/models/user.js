@@ -38,6 +38,24 @@ module.exports = (sequelize) => {
       field: "id",
       autoIncrement: false,
     },
+    dail_code: {
+      type: DataTypes.CHAR(100),
+      allowNull: true,
+      defaultValue: null,
+      comment: null,
+      primaryKey: false,
+      field: "dail_code",
+      autoIncrement: false,
+    },
+    mobile_no: {
+      type: DataTypes.CHAR(100),
+      allowNull: true,
+      defaultValue: null,
+      comment: null,
+      primaryKey: false,
+      field: "mobile_no",
+      autoIncrement: false,
+    },
   };
   const options = {
     tableName: "user",
