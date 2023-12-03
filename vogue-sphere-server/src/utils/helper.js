@@ -23,3 +23,5 @@ helper.errorResponse = (code, message, error) => {
     },
   };
 };
+
+module.exports = helper;

@@ -15,7 +15,7 @@ app.use(cors(corsOpts)); // use the cors middleware for all routes
 app.options("*", cors(corsOpts)); // enable pre-flight requests by responding to OPTIONS requests
 
 // api routes
-/* app.use("/", router); */
+app.use("/", router);
 
 // listening port 8090 - start the server
 app.listen(8090, () => {
