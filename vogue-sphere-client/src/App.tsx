@@ -1,11 +1,12 @@
 import "./App.css";
-import TopMenubar from "./components/TopMenubar/TopMenubar";
+import TopMenubar from "./components/MenuBars/TopMenubar/TopMenubar";
 // External Imports
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { protectedRoutes, publicRoutes } from "./routes/routes";
 import { AuthenticateUser } from "./utils/helper";
 import ThemedSuspense from "./common-components/ThemedSuspense";
 import { envVarConfig } from "./constants/Constants";
+import ProductMenuBar from "./components/MenuBars/ProductMenuBar/ProductMenuBar";
 
 function App() {
   // creating browser routes with user authentication
@@ -14,6 +15,7 @@ function App() {
   return (
     <>
       <TopMenubar />
+      <ProductMenuBar />
       <RouterProvider router={router} fallbackElement={<ThemedSuspense />} />
     </>
   );

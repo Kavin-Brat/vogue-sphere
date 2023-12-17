@@ -1,7 +1,7 @@
 import React from "react";
 import SearchDropdown from "./SearchDropdown";
-import userIcon from "../../icons/userIcon.svg";
-import cartIcon from "../../icons/cartIcon.svg";
+import userIcon from "../../../icons/userIcon.svg";
+import cartIcon from "../../../icons/cartIcon.svg";
 
 const TopMenubar: React.FC = () => {
   return (

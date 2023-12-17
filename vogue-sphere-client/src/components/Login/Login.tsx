@@ -21,7 +21,7 @@ const initialState: InitialState = {
 };
 
 function Login() {
-  const navigate: NavigationProp<ParamListBase> = useNavigate();
+  const navigate = useNavigate();
   const [newUser, setNewUser] = useState(false);
   const [loading, setLoading] = useState(false);
   const [userDetails, setUserDetails] = useState<InitialState>(initialState);
