@@ -1,12 +1,10 @@
 const { models } = require("../models/index");
+const { SECRET_KEY } = require("../constants/constants");
 const { UserModel } = models;
 const Sequelize = require("sequelize");
 const { Op } = Sequelize;
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-
-// secret key for creating the jwt token
-const SECRET_KEY = "secret123";
 
 // user login service
 const userLogin = async (req) => {
@@ -16,11 +14,15 @@ const userLogin = async (req) => {
       email: Sequelize.where(Sequelize.fn("LOWER", Sequelize.col("email")), {
         [Op.iLike]: `%${req.body.email.toLowerCase()}%`,
       }),
-      password: Sequelize.where(Sequelize.fn("LOWER", Sequelize.col("password")), {
+      /*       password: Sequelize.where(Sequelize.fn("LOWER", Sequelize.col("password")), {
         [Op.iLike]: `%${req.body.password.toLowerCase()}%`,
-      }),
+      }), */
     },
   });
+
+  // Compare and checking the user password with hashed password
+  let isPasswordCorrect = await bcrypt.compare(req.body.password?.toLowerCase(), user.password);
+  if (!isPasswordCorrect) return { message: "Invalid User!" };
 
   // creating JWT token with user creds
   const accessToken = jwt.sign(
@@ -46,6 +48,9 @@ const registerNewUser = async (req) => {
   if (!req.body.dail_code) return { message: "dail_code required!" };
   if (!req.body.mobile_no) return { message: "mobile_no required!" };
 
+  // Hashing password
+  let newPassword = await bcrypt.hash(req.body.password, 10);
+
   // Check if user already exist
   const user = await UserModel.findOne({
     attributes: ["email"],
@@ -61,7 +66,7 @@ const registerNewUser = async (req) => {
   const createUser = await UserModel.create({
     name: req.body.name,
     email: req.body.email,
-    password: req.body.password,
+    password: newPassword,
     dail_code: req.body.dail_code,
     mobile_no: req.body.mobile_no,
     id: Date.now(),
