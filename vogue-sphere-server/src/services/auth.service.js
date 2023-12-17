@@ -2,9 +2,11 @@ const { models } = require("../models/index");
 const { SECRET_KEY } = require("../constants/constants");
 const { UserModel } = models;
 const Sequelize = require("sequelize");
+const { generateUniqueId } = require("../utils/stringUtils");
 const { Op } = Sequelize;
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const helper = require("../utils/helper");
 
 // user login service
 const userLogin = async (req) => {
@@ -63,13 +65,16 @@ const registerNewUser = async (req) => {
   // throwing error if user already exist.
   if (user) return { message: "Email already exist!" };
 
+  // to generate unique user id
+  const uniqueId = generateUniqueId(`${req.body.name}${req.body.email}`);
+
   const createUser = await UserModel.create({
     name: req.body.name,
     email: req.body.email,
     password: newPassword,
     dail_code: req.body.dail_code,
     mobile_no: req.body.mobile_no,
-    id: Date.now(),
+    id: uniqueId,
   });
 
   return createUser ? null : { message: "Invalid User!" };
