@@ -36,13 +36,24 @@ const ProductMenuBar: React.FC = () => {
                 className="py-[4px]"
                 onMouseOver={() => {
                   setOpenPrdctMenuModal(true);
-                  setSubMenus(sub_menus);
+                  setSubMenus({
+                    sub_menus: sub_menus,
+                    menu_name: menu_name,
+                  });
                 }}
                 onMouseOut={() => {
                   setOpenPrdctMenuModal(false);
                 }}
               >
-                <motion.div whileHover={{ scale: 0.97 }} className="cursor-pointer bg-[#F3F9FB] hover:bg-regal-blue rounded-full border border-[#ffffff] w-auto py-[3px] px-[15px] flex justify-center items-center text-xs 2xl:text-base font-normal 2xl:font-medium text-[#666666] hover:text-[#ffffff] focus:outline-none focus:shadow-outline">
+                <motion.div
+                  initial={openPrdctMenuModal}
+                  whileHover={{ scale: 0.97 }}
+                  className={
+                    subMenus.menu_name === menu_name && openPrdctMenuModal
+                      ? " cursor-pointer bg-regal-blue rounded-full border border-[#ffffff] w-auto py-[3px] px-[15px] flex justify-center items-center text-xs 2xl:text-base font-normal 2xl:font-medium text-[#ffffff] focus:outline-none focus:shadow-outline"
+                      : "cursor-pointer bg-[#F3F9FB] rounded-full border border-[#ffffff] w-auto py-[3px] px-[15px] flex justify-center items-center text-xs 2xl:text-base font-normal 2xl:font-medium text-[#666666] focus:outline-none focus:shadow-outline"
+                  }
+                >
                   {menu_name || FIELDLABELS.na}
                 </motion.div>
               </div>
@@ -73,7 +84,7 @@ const ProductMenuBar: React.FC = () => {
                 }}
                 className={openPrdctMenuModal ? "block cursor-pointer bg-regal-blue w-[50%] h-48 absolute top-10 left-50 rounded-lg" : "hidden cursor-pointer bg-regal-blue w-[40%] h-48 absolute top-10 left-50 rounded-lg"}
               >
-                <ProductSubMenuItems sub_menus={subMenus} />
+                <ProductSubMenuItems sub_menus={subMenus.sub_menus} />
               </motion.div>
             </>
           );
