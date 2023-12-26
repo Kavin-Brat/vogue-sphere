@@ -7,6 +7,7 @@ const productType = require("./productType");
 const configSequelize = new Sequelize("postgres://postgres:Kavin@66O@127.0.0.1:5432/vogue-sphere", {
   dialect: "postgres",
   ssl: false,
+  logging: (...msg) => console.log(msg),
 });
 
 const models = {

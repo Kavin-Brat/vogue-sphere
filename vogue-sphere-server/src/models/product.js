@@ -21,7 +21,7 @@ module.exports = (sequelize) => {
       autoIncrement: false,
     },
     desc: {
-      type: DataTypes.CHAR(250),
+      type: DataTypes.CHAR(1000),
       allowNull: true,
       defaultValue: null,
       comment: null,

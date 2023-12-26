@@ -38,8 +38,7 @@ const searchProduct = async (req) => {
   results.desc = desc || "";
   results.id = id || "";
   results.type_name = productType ? productType.name : "";
-
-  console.info("results", results);
+  /* console.log(JSON.stringify(results, null, 4)); */
 
   return results;
 };
