@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const { authController } = require("../controllers/index");
+const { dashboardController } = require("../controllers/index");
 
 // Dashboard routes
-router.get("/product", authController.getProduc);
+router.get("/product", dashboardController.getProduct);
 
 module.exports = router;

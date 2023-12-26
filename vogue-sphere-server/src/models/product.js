@@ -2,6 +2,15 @@ const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
   const attributes = {
+    type_id: {
+      type: DataTypes.CHAR(100),
+      allowNull: true,
+      defaultValue: null,
+      comment: null,
+      primaryKey: false,
+      field: "type_id",
+      autoIncrement: false,
+    },
     name: {
       type: DataTypes.CHAR(100),
       allowNull: true,
@@ -11,22 +20,13 @@ module.exports = (sequelize) => {
       field: "name",
       autoIncrement: false,
     },
-    email: {
-      type: DataTypes.CHAR(100),
+    desc: {
+      type: DataTypes.CHAR(250),
       allowNull: true,
       defaultValue: null,
       comment: null,
       primaryKey: false,
-      field: "email",
-      autoIncrement: false,
-    },
-    password: {
-      type: DataTypes.CHAR(100),
-      allowNull: true,
-      defaultValue: null,
-      comment: null,
-      primaryKey: false,
-      field: "password",
+      field: "desc",
       autoIncrement: false,
     },
     id: {
@@ -38,31 +38,13 @@ module.exports = (sequelize) => {
       field: "id",
       autoIncrement: false,
     },
-    dail_code: {
-      type: DataTypes.CHAR(100),
-      allowNull: true,
-      defaultValue: null,
-      comment: null,
-      primaryKey: false,
-      field: "dail_code",
-      autoIncrement: false,
-    },
-    mobile_no: {
-      type: DataTypes.CHAR(100),
-      allowNull: true,
-      defaultValue: null,
-      comment: null,
-      primaryKey: false,
-      field: "mobile_no",
-      autoIncrement: false,
-    },
   };
   const options = {
-    tableName: "user",
+    tableName: "product",
     comment: "",
     indexes: [],
     timestamps: false,
   };
-  const UserModel = sequelize.define("user_model", attributes, options);
-  return UserModel;
+  const ProductModel = sequelize.define("product_model", attributes, options);
+  return ProductModel;
 };
