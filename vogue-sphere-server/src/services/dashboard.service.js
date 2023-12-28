@@ -24,20 +24,20 @@ const searchProduct = async (req) => {
   let productTypeId = product.dataValues.type_id;
   // To get the product type name from product id
   const productType = await ProductTypeModel.findOne({
-    attributes: ["id", "name"],
+    attributes: ["id", ["name", "type_name"]],
     where: {
       id: Sequelize.where(Sequelize.fn("LOWER", Sequelize.col("id")), {
         [Op.iLike]: `%${productTypeId.toLowerCase()}%`,
       }),
     },
   });
-
+  console.log("productType", productType);
   let { type_id, name, desc, id } = product;
   results.type_id = type_id || "";
   results.name = name || "";
   results.desc = desc || "";
   results.id = id || "";
-  results.type_name = productType ? productType.name : "";
+  results.type_name = productType ? productType.type_name : "";
   /* console.log(JSON.stringify(results, null, 4)); */
 
   return results;
