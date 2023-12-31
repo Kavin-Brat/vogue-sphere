@@ -26,7 +26,7 @@ const ProductMenuBar: React.FC = () => {
   ];
 
   return (
-    <div className="relative hidden xl:flex flex-row space-x-5 justify-center items-center w-full xl:h-[38px] 2xl:h-[43px] xl:py-[8px] 2xl:py-[10px] xl:px-[20px] 2xl:px-[30px] border-b border-[#EDEDED]">
+    <div className="z-10 relative hidden xl:flex flex-row space-x-5 justify-center items-center w-full xl:h-[38px] 2xl:h-[43px] xl:py-[8px] 2xl:py-[10px] xl:px-[20px] 2xl:px-[30px] border-b border-[#EDEDED]">
       {list &&
         list.length > 0 &&
         list.slice(0, 10).map((obj) => {
