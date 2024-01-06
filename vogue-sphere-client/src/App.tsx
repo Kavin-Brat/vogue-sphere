@@ -7,6 +7,7 @@ import { AuthenticateUser } from "./utils/helper";
 import ThemedSuspense from "./common-components/ThemedSuspense";
 import { envVarConfig } from "./constants/Constants";
 import ProductMenuBar from "./components/MenuBars/ProductMenuBar/ProductMenuBar";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   // creating browser routes with user authentication
@@ -17,6 +18,7 @@ function App() {
       <TopMenubar />
       <ProductMenuBar />
       <RouterProvider router={router} fallbackElement={<ThemedSuspense />} />
+      <Footer />
     </>
   );
 }

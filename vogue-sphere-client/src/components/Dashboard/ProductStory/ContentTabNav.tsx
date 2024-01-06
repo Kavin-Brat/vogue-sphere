@@ -9,7 +9,7 @@ const ContentTabNav: React.FC = () => {
   const list = ["Bestsellers", "Recommended for you", "Trending", "Collections", "New arrivals", "New season styles", "Discounted"];
 
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto bg-[#F3F9FB] px-2">
       <div className="flex flex-row space-x-5 justify-start items-start w-full py-[8px] 2xl:py-[14px] ">
         {list &&
           list.length > 0 &&
@@ -31,8 +31,8 @@ const ContentTabNav: React.FC = () => {
                     whileHover={{ scale: 0.97 }}
                     className={
                       subMenus === menu_name && openPrdctMenuModal
-                        ? " cursor-pointer bg-regal-blue rounded-full border border-[#ffffff] w-auto py-[3px] px-[15px] flex justify-center items-center text-xs 2xl:text-base font-normal 2xl:font-medium text-[#ffffff] focus:outline-none focus:shadow-outline"
-                        : "cursor-pointer bg-[#F3F9FB] rounded-full border border-[#ffffff] w-auto py-[3px] px-[15px] flex justify-center items-center text-xs 2xl:text-base font-normal 2xl:font-medium text-[#666666] focus:outline-none focus:shadow-outline"
+                        ? " cursor-pointer bg-regal-blue rounded-full border border-regal-blue w-auto py-[3px] px-[15px] flex justify-center items-center text-xs 2xl:text-base font-normal 2xl:font-medium text-[#ffffff] focus:outline-none focus:shadow-outline"
+                        : "cursor-pointer bg-[#ffffff] rounded-full border border-[#ffffff] w-auto py-[3px] px-[15px] flex justify-center items-center text-xs 2xl:text-base font-normal 2xl:font-medium text-[#666666] focus:outline-none focus:shadow-outline"
                     }
                   >
                     {menu_name || FIELDLABELS.na}
