@@ -2,8 +2,12 @@ import React from "react";
 import SearchDropdown from "./SearchDropdown";
 import userIcon from "../../../icons/userIcon.svg";
 import cartIcon from "../../../icons/cartIcon.svg";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
 
 const TopMenubar: React.FC = () => {
+  const userDetails = useSelector((state: RootState) => state.userDetails.value);
+
   return (
     <div className="flex flex-row justify-center items-center w-full h-[50px] xl:h-[60px] 2xl:h-[90px] py-[10px] xl:py-[14px] 2xl:py-[10px] px-[12px] xl:px-[20px] 2xl:px-[30px] border-b border-[#EDEDED]">
       <div className="basis-28 lg:basis-1/4 flex space-x-2 2xl:space-x-5">
@@ -45,6 +49,7 @@ const TopMenubar: React.FC = () => {
           <div className="flex justify-center items-center text-xs 2xl:text-base font-normal 2xl:font-medium text-[#666666]">Cart</div>
         </div>
       </div>
+      {userDetails?.name ? userDetails?.name : "NA"}
     </div>
   );
 };

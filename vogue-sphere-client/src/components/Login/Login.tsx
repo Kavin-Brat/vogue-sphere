@@ -3,6 +3,8 @@ import googleLogo from "../../icons/GoogleLogo.png";
 import { useNavigate } from "react-router-dom";
 import { CustomBlueButton } from "../../common-components/Buttons";
 import { motion } from "framer-motion";
+import { useDispatch } from "react-redux";
+import { updateUserDetails } from "../../store/userDetails";
 
 type ValueObj = { value: { value: string; label: string }; error: string };
 
@@ -27,7 +29,7 @@ function Login() {
   const [newUser, setNewUser] = useState(false);
   const [loading, setLoading] = useState(false);
   const [userDetails, setUserDetails] = useState<InitialState>(initialState);
-
+  const dispatch = useDispatch();
   const onClickCreateNewUser = () => {
     setNewUser((prev) => !prev);
   };
@@ -36,6 +38,7 @@ function Login() {
   const setTempLogin = (): void => {
     setLoading(true);
     localStorage.setItem("lin", "true");
+    dispatch(updateUserDetails({ name: "Kavin" }));
     setTimeout(() => {
       navigate("/dashboard");
       setLoading(false);
