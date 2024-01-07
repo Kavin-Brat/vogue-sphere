@@ -13,6 +13,18 @@ const getProduct = async (req, res) => {
   }
 };
 
+const downloadFile = async (req, res) => {
+  try {
+    const result = await dashboardService.downloadProductFile(req, res);
+    const response = helper.successResponse(200, "Product File Downloaded Successfully!", result);
+    return res.status(response.status).send(response);
+  } catch (error) {
+    const response = helper.errorResponse(500, "Internal Server Error!", error);
+    return res.status(response.status).send(response);
+  }
+};
+
 module.exports = {
   getProduct,
+  downloadFile,
 };

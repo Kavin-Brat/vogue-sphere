@@ -1,4 +1,5 @@
 const { models } = require("../models/index");
+var xlsx = require("xlsx");
 const { ProductModel, ProductTypeModel } = models;
 const Sequelize = require("sequelize");
 const { Op } = Sequelize;
@@ -43,6 +44,32 @@ const searchProduct = async (req) => {
   return results;
 };
 
+const downloadProductFile = () => {
+  var wb = xlsx.readFile(__dirname + "/SampleTR.xlsx");
+  var ws = wb.Sheets["Transaction Reports"];
+
+  // get worksheet data
+  var data = xlsx.utils.sheet_to_json(ws);
+
+  // Alter worksheet data
+  let alteredData = data.map((record) => {
+    record["Response Message"] = "Record Altered Succesfully";
+    record["Comments"] = "Hey! Comment Added Succesfully";
+    return record;
+  });
+  console.info("workbook", alteredData);
+  // create a new empty workbook
+  const newWB = xlsx.utils.book_new();
+  // create a new worksheet with json
+  const newWS = xlsx.utils.json_to_sheet(alteredData);
+  // append workshhet with a name to the new workbook
+  xlsx.utils.book_append_sheet(newWB, newWS, "Trans Details");
+  // write and create a file
+  xlsx.writeFile(newWB, "TRS.xlsx");
+  return;
+};
+
 module.exports = {
   searchProduct,
+  downloadProductFile,
 };
