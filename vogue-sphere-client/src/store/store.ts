@@ -1,8 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userDetailsReducer from "./userDetails";
+import dashboardReducer from "./dashboard";
 
 export const store = configureStore({
-  reducer: { userDetails: userDetailsReducer },
+  reducer: { userDetails: userDetailsReducer, dashboard: dashboardReducer },
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
